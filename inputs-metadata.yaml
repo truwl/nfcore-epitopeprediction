@@ -1,0 +1,341 @@
+parameter_meta:
+  epitopeprediction.samplesheet:
+    description: Path to comma-separated file containing information about the samples
+      in the experiment.
+    group: input_output_options
+    help: You will need to create a design file with information about the samples
+      in your experiment before running the pipeline. Use this parameter to specify
+      its location. It has to be a comma-separated file with 3 columns, and a header
+      row. See [usage docs](https://nf-co.re/epitopeprediction/usage#samplesheet-input).
+    hidden: false
+  epitopeprediction.outdir:
+    description: Path to the output directory where the results will be saved.
+    group: input_output_options
+    help: ''
+    hidden: false
+  epitopeprediction.email:
+    description: Email address for completion summary.
+    group: input_output_options
+    help: Set this parameter to your e-mail address to get a summary e-mail with details
+      of the run sent to you when the workflow exits. If set in your user config file
+      (`~/.nextflow/config`) then you don't need to specify this on the command line
+      for every run.
+    hidden: false
+  epitopeprediction.multiqc_title:
+    description: MultiQC report title. Printed as page header, used for filename if
+      not otherwise specified.
+    group: input_output_options
+    help: ''
+    hidden: false
+  epitopeprediction.genome_version:
+    description: Specifies  the human reference genome version.
+    group: reference_options
+    help: This defines against which human reference genome the pipeline performs
+      the analysis including the incorporation of genetic variants e.g..
+    hidden: false
+  epitopeprediction.proteome:
+    description: Specifies the reference proteome.
+    group: reference_options
+    help: Specifies the reference proteome files that are used for self-filtering.
+      Should be either a folder of FASTA files or a single FASTA file containing the
+      reference proteome(s).
+    hidden: false
+  epitopeprediction.igenomes_ignore:
+    description: Do not load the iGenomes reference config.
+    group: reference_genome_options
+    help: Do not load `igenomes.config` when running the pipeline. You may choose
+      this option if you observe clashes between custom parameters and those supplied
+      in `igenomes.config`.
+    hidden: true
+  epitopeprediction.filter_self:
+    description: Filter against human proteome.
+    group: peptide_prediction_options
+    help: Specifies that peptides should be filtered against the specified human proteome
+      references.
+    hidden: false
+  epitopeprediction.mhc_class:
+    description: MHC class for prediction.
+    group: peptide_prediction_options
+    help: Specifies whether the predictions should be done for MHC class I or class
+      II.
+    hidden: false
+  epitopeprediction.max_peptide_length:
+    description: Specifies the maximum peptide length.
+    group: peptide_prediction_options
+    help: 'Specifies the maximum peptide length (not applied when `--peptides` is
+      specified). Default: MHC class I: 11 aa, MHC class II: 16 aa'
+    hidden: false
+  epitopeprediction.min_peptide_length:
+    description: Specifies the minimum peptide length.
+    group: peptide_prediction_options
+    help: 'Specifies the minimum peptide length (not applied when `--peptides` is
+      specified). Default: MCH class I: 8 aa, MHC class II: 15 aa'
+    hidden: false
+  epitopeprediction.tools:
+    description: Specifies the prediction tool(s) to use.
+    group: peptide_prediction_options
+    help: 'Specifies the tool(s) to use. Available are: `syfpeithi`, `mhcflurry`,
+      `mhcnuggets-class-1`, `mhcnuggets-class-2`. Can be combined in a list separated
+      by comma.'
+    hidden: false
+  epitopeprediction.tool_thresholds:
+    description: Specifies tool-specific binder thresholds in a JSON file. This can
+      be used to override the given default binder threshold values.
+    group: peptide_prediction_options
+    help: 'Default affinity thresholds to determine whether a peptide is considered
+      as a binder are the following:: `syfpeithi` > 50, `mhcflurry` <=500, `mhcnuggets-class-1`
+      <= 500, `mhcnuggets-class-2` <= 500, `netmhc` <= 500, `netmhcpan` <= 500, `netmhcii`
+      <= 500, `netmhciipan` <= 500. Thresholds can be customized in a JSON file: `tool-name:value`'
+    hidden: false
+  epitopeprediction.wild_type:
+    description: Specifies whether wild-type sequences should be predicted.
+    group: peptide_prediction_options
+    help: Specifies whether wild-type sequences of mutated peptides should be predicted
+      as well.
+    hidden: false
+  epitopeprediction.fasta_output:
+    description: Specifies that sequences of proteins, affected by provided variants,
+      will be written to a FASTA file.
+    group: peptide_prediction_options
+    help: Specifies that sequences of proteins that are affected by the provided genomic
+      variants are written to a `FASTA` file. The resulting `FASTA` file will contain
+      the wild-type and mutated protein sequences.
+    hidden: false
+  epitopeprediction.show_supported_models:
+    description: Writes out supported prediction models.
+    group: peptide_prediction_options
+    help: Writes out supported models. Does not run any predictions.
+    hidden: false
+  epitopeprediction.peptides_split_maxchunks:
+    description: Specifies the maximum number of peptide chunks.
+    group: run_optimisation
+    help: Used in combination with `--peptides` or `--proteins`. Maximum number of
+      peptide chunks that will be created for parallelisation.
+    hidden: false
+  epitopeprediction.peptides_split_minchunksize:
+    description: Specifies the minimum number of peptides that should be written into
+      one chunk.
+    group: run_optimisation
+    help: 'Used in combination with `--peptides` or `--proteins`: minimum number of
+      peptides that should be written into one chunk.'
+    hidden: false
+  epitopeprediction.netmhcpan_path:
+    description: To use the 'netmhcpan' tool, specify the path to the original software
+      tarball for NetMHCpan 4.0 (Linux) here.
+    group: external_software
+    help: ''
+    hidden: false
+  epitopeprediction.netmhc_path:
+    description: To use the 'netmhc' tool, specify the path to the original software
+      tarball for NetMHC 4.0 (Linux) here.
+    group: external_software
+    help: ''
+    hidden: false
+  epitopeprediction.netmhciipan_path:
+    description: To use the 'netmhciipan' tool, specify the path to the original software
+      tarball for NetMHCIIpan 3.1 (Linux) here.
+    group: external_software
+    help: ''
+    hidden: false
+  epitopeprediction.netmhcii_path:
+    description: To use the 'netmhcii' tool, specify the path to the original software
+      tarball for NetMHCII 2.2 (Linux) here.
+    group: external_software
+    help: ''
+    hidden: false
+  epitopeprediction.custom_config_version:
+    description: Git commit id for Institutional configs.
+    group: institutional_config_options
+    help: 'Provide git commit id for custom Institutional configs hosted at `nf-core/configs`.
+      This was implemented for reproducibility purposes. Default: `master`.
+
+
+      ```bash
+
+      ## Download and use config file with following git commit id
+
+      --custom_config_version d52db660777c4bf36546ddb188ec530c3ada1b96
+
+      ```'
+    hidden: true
+  epitopeprediction.custom_config_base:
+    description: Base directory for Institutional configs.
+    group: institutional_config_options
+    help: 'If you''re running offline, nextflow will not be able to fetch the institutional
+      config files from the internet. If you don''t need them, then this is not a
+      problem. If you do need them, you should download the files from the repo and
+      tell nextflow where to find them with the `custom_config_base` option. For example:
+
+
+      ```bash
+
+      ## Download and unzip the config files
+
+      cd /path/to/my/configs
+
+      wget https://github.com/nf-core/configs/archive/master.zip
+
+      unzip master.zip
+
+
+      ## Run the pipeline
+
+      cd /path/to/my/data
+
+      nextflow run /path/to/pipeline/ --custom_config_base /path/to/my/configs/configs-master/
+
+      ```
+
+
+      > Note that the nf-core/tools helper package has a `download` command to download
+      all required pipeline files + singularity containers + institutional configs
+      in one go for you, to make this process easier.'
+    hidden: true
+  epitopeprediction.config_profile_name:
+    description: Institutional config name.
+    group: institutional_config_options
+    help: ''
+    hidden: true
+  epitopeprediction.config_profile_description:
+    description: Institutional config description.
+    group: institutional_config_options
+    help: ''
+    hidden: true
+  epitopeprediction.config_profile_contact:
+    description: Institutional config contact information.
+    group: institutional_config_options
+    help: ''
+    hidden: true
+  epitopeprediction.config_profile_url:
+    description: Institutional config URL link.
+    group: institutional_config_options
+    help: ''
+    hidden: true
+  epitopeprediction.max_cpus:
+    description: Maximum number of CPUs that can be requested for any single job.
+    group: max_job_request_options
+    help: Use to set an upper-limit for the CPU requirement for each process. Should
+      be an integer e.g. `--max_cpus 1`
+    hidden: true
+  epitopeprediction.max_memory:
+    description: Maximum amount of memory that can be requested for any single job.
+    group: max_job_request_options
+    help: Use to set an upper-limit for the memory requirement for each process. Should
+      be a string in the format integer-unit e.g. `--max_memory '8.GB'`
+    hidden: true
+  epitopeprediction.max_time:
+    description: Maximum amount of time that can be requested for any single job.
+    group: max_job_request_options
+    help: Use to set an upper-limit for the time requirement for each process. Should
+      be a string in the format integer-unit e.g. `--max_time '2.h'`
+    hidden: true
+  epitopeprediction.help:
+    description: Display help text.
+    group: generic_options
+    help: ''
+    hidden: true
+  epitopeprediction.email_on_fail:
+    description: Email address for completion summary, only when pipeline fails.
+    group: generic_options
+    help: An email address to send a summary email to when the pipeline is completed
+      - ONLY sent if the pipeline does not exit successfully.
+    hidden: true
+  epitopeprediction.plaintext_email:
+    description: Send plain-text email instead of HTML.
+    group: generic_options
+    help: ''
+    hidden: true
+  epitopeprediction.max_multiqc_email_size:
+    description: File size limit when attaching MultiQC reports to summary emails.
+    group: generic_options
+    help: ''
+    hidden: true
+  epitopeprediction.monochrome_logs:
+    description: Do not use coloured log outputs.
+    group: generic_options
+    help: ''
+    hidden: true
+  epitopeprediction.multiqc_config:
+    description: Custom config file to supply to MultiQC.
+    group: generic_options
+    help: ''
+    hidden: true
+  epitopeprediction.tracedir:
+    description: Directory to keep pipeline Nextflow logs and reports.
+    group: generic_options
+    help: ''
+    hidden: true
+  epitopeprediction.validate_params:
+    description: Boolean whether to validate parameters against the schema at runtime
+    group: generic_options
+    help: ''
+    hidden: true
+  epitopeprediction.show_hidden_params:
+    description: Show all params when using `--help`
+    group: generic_options
+    help: By default, parameters set as _hidden_ in the schema are not shown on the
+      command line when a user runs with `--help`. Specifying this option will tell
+      the pipeline to show all parameters.
+    hidden: true
+  epitopeprediction.enable_conda:
+    description: Run this workflow with Conda. You can also use '-profile conda' instead
+      of providing this parameter.
+    group: generic_options
+    help: ''
+    hidden: true
+parameter_group:
+  input_output_options:
+    description: Define where the pipeline should find input data and save output
+      data.
+    help: null
+    title: Input/output options
+  reference_options:
+    description: Options for the genome and proteome reference.
+    help: null
+    title: Reference options
+  reference_genome_options:
+    description: Reference genome related files and options required for the workflow.
+    help: null
+    title: Reference genome options
+  peptide_prediction_options:
+    description: Options for the peptide prediction step.
+    help: null
+    title: Peptide prediction options
+  run_optimisation:
+    description: Options for optimising the pipeline run execution.
+    help: null
+    title: Run optimisation
+  external_software:
+    description: External MHC binding prediction software that is not shipped with
+      the pipeline.
+    help: null
+    title: External software
+  institutional_config_options:
+    description: Parameters used to describe centralised config profiles. These should
+      not be edited.
+    help: The centralised nf-core configuration profiles use a handful of pipeline
+      parameters to describe themselves. This information is then printed to the Nextflow
+      log when you run a pipeline. You should not need to change these values when
+      you run a pipeline.
+    title: Institutional config options
+  max_job_request_options:
+    description: Set the top limit for requested resources for any single job.
+    help: 'If you are running on a smaller system, a pipeline step requesting more
+      resources than are available may cause the Nextflow to stop the run with an
+      error. These options allow you to cap the maximum resources requested by any
+      single job so that the pipeline will run on your system.
+
+
+      Note that you can not _increase_ the resources requested by any job using these
+      options. For that you will need your own configuration file. See [the nf-core
+      website](https://nf-co.re/usage/configuration) for details.'
+    title: Max job request options
+  generic_options:
+    description: Less common options for the pipeline, typically set in a config file.
+    help: 'These options are common to all nf-core pipelines and allow you to customise
+      some of the core preferences for how the pipeline runs.
+
+
+      Typically these options would be set in a Nextflow config file loaded for all
+      pipeline runs, such as `~/.nextflow/config`.'
+    title: Generic options
